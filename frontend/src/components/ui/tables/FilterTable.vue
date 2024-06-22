@@ -51,7 +51,6 @@ export default {
       filter: "",
     };
   },
-  mounted(){console.log(this.items);},
   computed: {
     filteredItems() {
       return this.items.filter((item) => {
@@ -63,7 +62,6 @@ export default {
   },
   methods: {
     deleted(id) {
-      console.log(id);
       this.$emit('item-deleted', id);
     },
     edited(id) {

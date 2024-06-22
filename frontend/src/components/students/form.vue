@@ -243,7 +243,6 @@ export default {
       }
 
       try {
-        console.log(this.editing);
         if (this.editing) {
           await this.$axios.put(`/_/students/${this.initialData.id}`, this.formData);
           alert('Estudiante actualizado exitosamente');
