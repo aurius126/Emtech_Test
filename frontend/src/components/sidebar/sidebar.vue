@@ -4,7 +4,7 @@
       <span v-if="!isCollapsed">➖</span>
       <span v-else>➕</span>
     </button>
-    <h2 v-if="!isCollapsed">Mi Sidebar</h2>
+    <img v-if="!isCollapsed" src="https://salesforce.emtech.digital/pr-lat/assets/img/logoEmtechAzules.svg" alt="Emtech">
     <nav>
       <ul>
         <li v-for="item in menuItems" :key="item.path">
