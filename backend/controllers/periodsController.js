@@ -9,6 +9,34 @@ exports.getPeriods = (req, res) => {
   });
 };
 
+exports.getPeriodsPaginate = (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  db.query('SELECT COUNT(*) as count FROM periods', (err, countResult) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    
+    const totalItems = countResult[0].count;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    db.query('SELECT * FROM periods LIMIT ? OFFSET ?', [limit, offset], (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.json({
+        data: results,
+        totalItems: totalItems,
+        totalPages: totalPages,
+        currentPage: page
+      });
+    });
+  });
+};
+
 exports.addPeriod = (req, res) => {
   const { period, active } = req.body;
   db.query(

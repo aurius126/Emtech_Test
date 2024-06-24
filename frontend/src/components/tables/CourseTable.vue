@@ -2,7 +2,7 @@
     <div>
         <uiCard>
             <h4>Cursos</h4>
-            <FilterTable :items="courses" :fields="fields" @item-deleted="removeCourse" :delete="true"></FilterTable>
+            <FilterTable :items="courses" :currentPage="currentPage" :totalItems="totalItems" :fields="fields" @item-deleted="removeCourse" :delete="true"></FilterTable>
         </uiCard>
     </div>
 </template>
@@ -20,11 +20,15 @@ export default {
     data() {
         return {
             courses: [],
+            allCourses: [],
             fields: [
                 { key: "id", label: "ID" },
                 { key: "course_name", label: "Curso" },
                 { key: "Action", label: "Acción" },
             ],
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: 1
         };
     },
     created() {
@@ -32,11 +36,15 @@ export default {
     },
     methods: {
         fetchCourses() {
-            this.$axios.get('/_/courses').then(response => {
-                this.courses = response.data.map(course => ({
+            this.$axios.get('/_/courses/paginate').then(response => {
+                const { data, totalItems, totalPages } = response.data;
+                this.allCourses = data;
+                this.courses = data.map(course => ({
                     id: course.id,
                     course_name: course.course_name
                 }));
+                this.totalPages = totalPages;
+                this.totalItems = totalItems;
             });
         },
         removeCourse(id) {

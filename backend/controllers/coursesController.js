@@ -9,6 +9,34 @@ exports.getCourses = (req, res) => {
   });
 };
 
+exports.getCoursesPaginate = (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  db.query('SELECT COUNT(*) as count FROM courses', (err, countResult) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    const totalItems = countResult[0].count;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    db.query('SELECT * FROM courses LIMIT ? OFFSET ?', [limit, offset], (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.json({
+        data: results,
+        totalItems: totalItems,
+        totalPages: totalPages,
+        currentPage: page
+      });
+    });
+  });
+};
+
 exports.addCourse = (req, res) => {
   const { course_name } = req.body;
   db.query(

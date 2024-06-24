@@ -1,10 +1,10 @@
 <template>
   <b-container fluid class="h-100">
     <b-row class="h-50 mb-4">
-      <b-col lg="8" sm="12" class="h-100">
+      <b-col lg="8" sm="12">
         <StudentForm />
       </b-col>
-      <b-col lg="4" sm="12" class="h-100">
+      <b-col lg="4" sm="12">
         <Courses />
         <Periods />
       </b-col>

@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: true,
       activeInactiveData: [],
       studentsInactiveByPeriodData: [],
       studentsByPeriodData: [],

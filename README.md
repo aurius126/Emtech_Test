@@ -3,7 +3,7 @@ Requerimientos:
 -NPM 10.7.0
 
 Pasos:
-Base de datos:
+Base de datos en MYSQL:
 -Crear una base de datos llamada emtech
 -Hacer un dump con el archivo dump-emtech-202406212058.sql
 
